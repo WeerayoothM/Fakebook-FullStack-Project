@@ -1,6 +1,7 @@
-import { Button, Card, Col, Dropdown, Image, Menu, notification, Row } from 'antd'
+import { Button, Col, Dropdown, Menu, notification, Row } from 'antd'
 import Avatar from 'antd/lib/avatar/avatar';
 import React from 'react'
+import { Link } from 'react-router-dom';
 import axios from '../../config/axios';
 
 function FriendsList({ fetchData, id, name, profile_url }) {
@@ -32,7 +33,9 @@ function FriendsList({ fetchData, id, name, profile_url }) {
                 </Col>
                 <Col span={12} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-around', alignItems: 'center' }}>
                     <Row style={{ fontSize: '1.3rem' }}>
-                        {name}
+                        <Link to={`/profile/${id}`} style={{ color: "#3581c9", current: 'pointer' }}>
+                            <strong>{name}</strong>
+                        </Link>
                     </Row>
                     <Row>
                         <Dropdown overlay={menu} placement="bottomLeft">

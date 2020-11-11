@@ -1,4 +1,4 @@
-import { Avatar, Card, Col, Divider, Dropdown, Image, Input, Menu, message, Modal, notification, Row, Upload } from 'antd';
+import { Avatar, Card, Col, Dropdown, Image, Input, Menu, message, Modal, notification, Row, Upload } from 'antd';
 import React, { useState } from 'react';
 import { CommentOutlined, EllipsisOutlined } from '@ant-design/icons';
 import CommentList from '../CommentList/CommentList'
@@ -12,7 +12,7 @@ import { BASE_BACKEND_URL } from '../../config/constants';
 
 
 function Post({ post, fetchData }) {
-    const { id, caption, picture_url, createdAt, updatedAt, Comments, User } = post;
+    const { id, caption, picture_url, createdAt, Comments, User } = post;
     const [postInput, setPostInput] = useState('');
     const [imageUrl, setImageUrl] = useState('');
     const [fileList, setFileList] = useState([]);
@@ -189,7 +189,7 @@ function Post({ post, fetchData }) {
                 </Col>
                 <Col span={19} style={{ padding: '15px 15px 15px 5px', display: 'flex', justifyContent: 'center', alignItems: 'flex-start', flexDirection: 'column', fontSize: '1rem' }}>
                     <Row style={{ fontSize: '1rem' }}>
-                        <Link to="#" style={{ color: "#385898" }}>
+                        <Link to={`/profile/${User.id}`} style={{ color: "#385898" }}>
                             <strong>{User.name}</strong>
                         </Link>
                     </Row>

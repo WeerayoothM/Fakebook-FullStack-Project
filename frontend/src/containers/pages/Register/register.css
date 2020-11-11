@@ -1,0 +1,26 @@
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background-color: #eeeeee;
+  /* background-image: url("../../../Images/Lovepik_com-500667884-social-network-background_edit.jpg"); */
+  background-size: cover;
+  object-fit: cover;
+}
+
+.register-background {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: auto;
+  transition: all 0.75s ease;
+}
+
+@media screen and (max-width: 992px) {
+  .register-background {
+    opacity: 0.5;
+  }
+}

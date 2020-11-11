@@ -1,4 +1,4 @@
-import { Avatar, Button, Col, Dropdown, Input, Menu, Modal, notification, Row } from 'antd';
+import { Avatar, Col, Dropdown, Input, Menu, Modal, notification, Row } from 'antd';
 import { EllipsisOutlined } from '@ant-design/icons'
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -114,7 +114,7 @@ function Comment(props) {
                     </Col>
                     <Col span={19} style={{ display: 'flex', justifyContent: 'flex-start' }}>
                         <div className="comment-layout">
-                            <Link to="#" style={{ color: "#385898", fontWeight: 'bold' }}>
+                            <Link to={`/profile/${props.writer.id}`} style={{ color: "#385898", fontWeight: 'bold' }}>
                                 {props.writer.name}
                             </Link>
                             <br />{props.content}
@@ -128,58 +128,4 @@ function Comment(props) {
     )
 }
 
-{/* <Col span={3} style={{ padding: '15px 0px 15px 15px' }}>
-                        <Avatar src={props.writer.profile_url} alt='' style={{ height: '30px', width: '30px', objectFit: 'cover' }} />
-                    </Col>
-                    <Col span={19} >
-                        <div style={{ border: '1px solid' }}>
-                            <Row>
-                                <Link to="#" style={{ color: "#385898", fontWeight: 'bold' }}>
-                                    {props.writer.name}
-                                </Link>
-                            </Row>
-                            <Row >
-                                {props.content}
-                            </Row>
-                        </div>
-                    </Col> */}
-
 export default Comment
-
-// import React from "react";
-// import { Row, Col, Avatar } from "antd";
-// import { EllipsisOutlined } from "@ant-design/icons";
-// import "./Comment.css";
-// import { Link } from "react-router-dom";
-
-// function Comment(props) {
-//     return (
-//         <Row style={{ margin: "10px 12px 10px 12px" }}>
-//             <Col>
-//                 <div
-//                     style={{
-//                         display: "flex",
-//                         alignItems: "start",
-//                         width: "38px",
-//                         height: "32px",
-//                     }}
-//                 >
-//                     <Avatar size={32} src={props.writer.profile_url} />
-//                 </div>
-//             </Col>
-//             <Col>
-//                 <div className="comment-layout">
-//                     <Link to="#" style={{ color: "#385898" }}>
-//                         <strong>{props.writer.name}</strong>
-//                     </Link>
-//           &nbsp;{props.content}
-//                 </div>
-//             </Col>
-//             <Col>
-//                 <EllipsisOutlined />
-//             </Col>
-//         </Row>
-//     );
-// }
-
-// export default Comment;

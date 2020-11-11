@@ -1,5 +1,4 @@
 import { Button, Col, message, Row, Upload, Input, Avatar, Card, Form, notification } from 'antd';
-import { PictureOutlined } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
 import LocalStorageService from '../../services/LocalStorageService';
 import jwt_decode from "jwt-decode";
@@ -74,7 +73,9 @@ function CreatePost({ fetchData }) {
         axios.get(`/users/${decoded.id}`)
             .then(res => {
                 console.log(res)
-                setProfileUrl(res.data.targetUser.profile_url)
+                const imgUrl = res.data.targetUser.profile_url
+                const isCompleteUrl = imgUrl.includes('http')
+                setProfileUrl(isCompleteUrl ? imgUrl : `${BASE_BACKEND_URL}/${imgUrl}`);
             }).catch(err => {
                 console.log(err)
             })
