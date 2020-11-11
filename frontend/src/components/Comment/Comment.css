@@ -1,0 +1,16 @@
+.comment-layout {
+  background-color: #f2f3f5;
+  border-radius: 18px;
+  box-sizing: border-box;
+  text-align: left;
+  color: #1c1e21;
+  line-height: 16px;
+  margin: 5px 0;
+  max-width: 100%;
+  word-wrap: break-word;
+  word-break: break-word;
+  position: relative;
+  white-space: normal;
+  font-family: inherit;
+  padding: 8px 15px;
+}

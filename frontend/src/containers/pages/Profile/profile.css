@@ -1,0 +1,12 @@
+.btn-friend {
+  color: blue;
+}
+.btn-friend:active {
+  color: #000;
+}
+.btn-friend:hover {
+  color: #000;
+}
+/* .btn-friend:focus {
+  color: #000;
+} */
