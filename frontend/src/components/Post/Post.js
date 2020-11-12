@@ -1,5 +1,5 @@
 import { Avatar, Button, Card, Col, Dropdown, Image, Input, Menu, message, Modal, notification, Row, Upload } from 'antd';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { CommentOutlined, EllipsisOutlined, LikeOutlined } from '@ant-design/icons';
 import CommentList from '../CommentList/CommentList'
 import { Link } from 'react-router-dom';
@@ -7,19 +7,23 @@ import jwt_decode from "jwt-decode";
 import LocalStorageService from '../../services/LocalStorageService';
 import axios from '../../config/axios';
 import { BASE_BACKEND_URL } from '../../config/constants';
-// import ImgCrop from 'antd-img-crop';
-
-
+import LikesList from '../LikesList/LikesList';
 
 function Post({ post, fetchData }) {
-    const { id, caption, picture_url, createdAt, Comments, User } = post;
+    const { id, caption, picture_url, createdAt, Comments, User, Likes } = post;
     const [postInput, setPostInput] = useState('');
     const [imageUrl, setImageUrl] = useState('');
     const [fileList, setFileList] = useState([]);
+    const [isLike, setIsLike] = useState(false);
     const [isShowComment, setIsShowComment] = useState(false);
     const token = LocalStorageService.getToken();
     const decoded = jwt_decode(token);
 
+    useEffect(() => {
+        const indexMyLike = Likes.findIndex(like => like.User.id === decoded.id);
+        console.log(indexMyLike)
+        if (indexMyLike !== -1) setIsLike(true);
+    }, [])
 
 
     let manageButton = null;
@@ -63,6 +67,34 @@ function Post({ post, fetchData }) {
         const imgWindow = window.open(src);
         imgWindow.document.write(image.outerHTML);
     };
+
+    const likePost = () => {
+        axios.post(`/posts/like/${id}`)
+            .then(res => {
+                notification.success({
+                    description: 'like success'
+                })
+                setIsLike(true)
+                fetchData()
+            }).catch(err => {
+                console.log(err)
+            })
+    }
+
+    const unLikePost = () => {
+        axios.delete(`/posts/like/${id}`)
+            .then(res => {
+                notification.success({
+                    description: 'unlike success'
+                })
+                setIsLike(false)
+                fetchData()
+            }).catch(err => {
+                notification.error({
+                    description: 'unlike fail'
+                })
+            })
+    }
 
     const deletePost = () => {
         axios.delete(`/posts/${id}`)
@@ -212,18 +244,17 @@ function Post({ post, fetchData }) {
             }
 
             <Row style={{ width: '90%', height: '40px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'gray', borderBottom: '1px solid hsl(0,0%,90%)' }}>
-
-                <span><LikeOutlined />{Comments.length}</span>
+                <LikesList Likes={Likes} />
                 <span>{Comments.length}&nbsp;Comments</span>
 
             </Row>
 
             <Row style={{ width: '100%', height: '40px', display: 'flex', justifyContent: 'center', alignItems: 'center', color: 'gray', borderBottom: '1px solid hsl(0,0%,90%)', }}>
                 <Col span={3} style={{}}>
-                    <Button type="text" bordered={false}><LikeOutlined />&nbsp;&nbsp;Like</Button>
+                    <Button type="text" onClick={isLike ? unLikePost : likePost} ><LikeOutlined />&nbsp;&nbsp;{isLike ? 'Unlike' : 'Like'}</Button>
                 </Col>
                 <Col span={20}>
-                    <Button type="text" bordered={false} onClick={() => setIsShowComment(!isShowComment)} style={{ cursor: 'pointer' }}><CommentOutlined />&nbsp;&nbsp;&nbsp;Comment</Button>
+                    <Button type="text" onClick={() => setIsShowComment(!isShowComment)} style={{ cursor: 'pointer' }}><CommentOutlined />&nbsp;&nbsp;&nbsp;Comment</Button>
                 </Col>
             </Row>
 

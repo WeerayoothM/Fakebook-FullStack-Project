@@ -66,7 +66,7 @@ function Comment(props) {
                     แก้ไขคอมเมนต์
                 </Link> */}
                 <>
-                    <Link onClick={showModal} style={{ color: "#1D2129" }}>
+                    <Link to="/" onClick={showModal} style={{ color: "#1D2129" }}>
                         แก้ไขคอมเมนต์
                     </Link>
                     <Modal
@@ -81,7 +81,7 @@ function Comment(props) {
                 </>
             </Menu.Item>
             <Menu.Item key="1">
-                <Link onClick={deleteComment} style={{ color: "#1D2129" }}>
+                <Link to="/" onClick={deleteComment} style={{ color: "#1D2129" }}>
                     ลบคอมเมนต์
                 </Link>
             </Menu.Item>

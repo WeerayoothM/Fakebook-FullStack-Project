@@ -9,7 +9,14 @@ const getAllPostWithoutAuth = async (req, res) => {
         attributes: ["id", "comment"],
         include: [{ model: db.User, attributes: ["id", "name", "profile_url"] }]
       },
-      { model: db.User, attributes: ["id", "name", "profile_url"] }
+      { model: db.User, attributes: ["id", "name", "profile_url"] },
+      {
+        model: db.Like,
+        attributes: ["id"],
+        include: [{
+          model: db.User, attributes: ["id", "name", "profile_url"]
+        }]
+      }
     ],
     attributes: ["id", "caption", "picture_url", "createdAt", "updatedAt"],
   });
@@ -21,6 +28,17 @@ const createPost = async (req, res) => {
   const newPost = await db.Post.create({ caption, picture_url: imageUrl, user_id: req.user.id });
   res.status(201).send(newPost);
 };
+
+const likePost = async (req, res) => {
+  const postId = req.params.id;
+  await db.Like.create({ user_id: req.user.id, post_id: postId })
+  res.status(201).send({ message: "like success" });
+}
+const unLikePost = async (req, res) => {
+  const postId = req.params.id;
+  await db.Like.destroy({ where: { post_id: postId, user_id: req.user.id } })
+  res.status(204).send();
+}
 
 const deletePost = async (req, res) => {
   const postId = req.params.id;
@@ -43,9 +61,20 @@ const getAllMyPost = async (req, res) => {
       {
         model: db.Comment,
         attributes: ["id", "comment"],
-        include: [{ model: db.User, attributes: ["id", "name", "profile_url"] }]
+        include: [
+          {
+            model: db.User,
+            attributes: ["id", "name", "profile_url"]
+          }]
       },
-      { model: db.User, attributes: ["id", "name", "profile_url"] }
+      { model: db.User, attributes: ["id", "name", "profile_url"] },
+      {
+        model: db.Like,
+        attributes: ["id"],
+        include: [{
+          model: db.User, attributes: ["id", "name", "profile_url"]
+        }]
+      }
     ],
     attributes: ["id", "caption", "picture_url", "createdAt", "updatedAt"],
   });
@@ -62,7 +91,14 @@ const getAllFriendPost = async (req, res) => {
         attributes: ["id", "comment"],
         include: [{ model: db.User, attributes: ["id", "name", "profile_url"] }]
       },
-      { model: db.User, attributes: ["id", "name", "profile_url"] }
+      { model: db.User, attributes: ["id", "name", "profile_url"] },
+      {
+        model: db.Like,
+        attributes: ["id"],
+        include: [{
+          model: db.User, attributes: ["id", "name", "profile_url"]
+        }]
+      }
     ],
     attributes: ["id", "caption", "picture_url", "createdAt", "updatedAt"],
   });
@@ -88,7 +124,14 @@ const getMyFeed = async (req, res) => {
         attributes: ["id", "comment"],
         include: [{ model: db.User, attributes: ["id", "name", "profile_url"] }]
       },
-      { model: db.User, attributes: ["id", "name", "profile_url"] }
+      { model: db.User, attributes: ["id", "name", "profile_url"] },
+      {
+        model: db.Like,
+        attributes: ["id"],
+        include: [{
+          model: db.User, attributes: ["id", "name", "profile_url"]
+        }]
+      }
     ],
     attributes: ["id", "caption", "picture_url", "createdAt", "updatedAt"],
     order: [
@@ -101,7 +144,9 @@ const getMyFeed = async (req, res) => {
 
 module.exports = {
   createPost,
+  likePost,
   deletePost,
+  unLikePost,
   editPost,
   getAllMyPost,
   getAllFriendPost,
