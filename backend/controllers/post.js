@@ -37,7 +37,6 @@ const editPost = async (req, res) => {
 };
 
 const getAllMyPost = async (req, res) => {
-  console.log('getallmypost')
   const allPost = await db.Post.findAll({
     where: { user_id: req.user.id },
     include: [
@@ -54,8 +53,6 @@ const getAllMyPost = async (req, res) => {
 };
 
 const getAllFriendPost = async (req, res) => {
-  console.log('getallfriendpost')
-
   const userId = req.params.userId;
   const allPost = await db.Post.findAll({
     where: { user_id: userId },

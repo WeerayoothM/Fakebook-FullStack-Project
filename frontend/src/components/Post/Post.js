@@ -1,6 +1,6 @@
-import { Avatar, Card, Col, Dropdown, Image, Input, Menu, message, Modal, notification, Row, Upload } from 'antd';
+import { Avatar, Button, Card, Col, Dropdown, Image, Input, Menu, message, Modal, notification, Row, Upload } from 'antd';
 import React, { useState } from 'react';
-import { CommentOutlined, EllipsisOutlined } from '@ant-design/icons';
+import { CommentOutlined, EllipsisOutlined, LikeOutlined } from '@ant-design/icons';
 import CommentList from '../CommentList/CommentList'
 import { Link } from 'react-router-dom';
 import jwt_decode from "jwt-decode";
@@ -16,6 +16,7 @@ function Post({ post, fetchData }) {
     const [postInput, setPostInput] = useState('');
     const [imageUrl, setImageUrl] = useState('');
     const [fileList, setFileList] = useState([]);
+    const [isShowComment, setIsShowComment] = useState(false);
     const token = LocalStorageService.getToken();
     const decoded = jwt_decode(token);
 
@@ -205,23 +206,36 @@ function Post({ post, fetchData }) {
 
             {
                 picture_url ?
-                    <Row style={{ width: '100%' }}>
+                    <Row style={{ width: '100%', borderBottom: '1px solid hsl(0,0%,90%)' }}>
                         <Image src={picture_url} width={'100%'} style={{ objectFit: 'cover' }} />
                     </Row> : null
             }
 
-            <Row style={{ width: '100%', height: '40px', display: 'flex', justifyContent: 'center', alignItems: 'center', color: 'gray', borderBottom: '1px solid hsl(0,0%,90%)', borderTop: '1px solid hsl(0,0%,90%)' }}>
-                <CommentOutlined />&nbsp;&nbsp;&nbsp;<span>ความคิดเห็น</span>
+            <Row style={{ width: '90%', height: '40px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'gray', borderBottom: '1px solid hsl(0,0%,90%)' }}>
+
+                <span><LikeOutlined />{Comments.length}</span>
+                <span>{Comments.length}&nbsp;Comments</span>
+
+            </Row>
+
+            <Row style={{ width: '100%', height: '40px', display: 'flex', justifyContent: 'center', alignItems: 'center', color: 'gray', borderBottom: '1px solid hsl(0,0%,90%)', }}>
+                <Col span={3} style={{}}>
+                    <Button type="text" bordered={false}><LikeOutlined />&nbsp;&nbsp;Like</Button>
+                </Col>
+                <Col span={20}>
+                    <Button type="text" bordered={false} onClick={() => setIsShowComment(!isShowComment)} style={{ cursor: 'pointer' }}><CommentOutlined />&nbsp;&nbsp;&nbsp;Comment</Button>
+                </Col>
             </Row>
 
             <Row style={{ padding: '0', width: '100%', display: 'flex' }}>
 
-                {/* <span>ที่เหลือเป็น comment Component</span> */}
-                <CommentList
-                    fetchData={fetchData}
-                    postId={id}
-                    commentList={Comments}
-                />
+
+                {isShowComment &&
+                    <CommentList
+                        fetchData={fetchData}
+                        postId={id}
+                        commentList={Comments}
+                    />}
             </Row>
         </Card>
 

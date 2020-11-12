@@ -74,7 +74,7 @@ function Register(props) {
     };
     return (
         <div className="register-container" >
-            <img className='register-background' src={backgroundImage} />
+            <div className='register-background vignette' />
             <Col xs={0} sm={0} md={0} lg={10} xl={10}></Col>
             <Col xs={20} sm={20} md={20} lg={14} xl={14}>
 
@@ -87,7 +87,7 @@ function Register(props) {
                 >
                     <Row justify='center' gutter={32} style={{ padding: '20px', width: '100%' }}>
                         <Col span={12} style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end' }}>
-                            <Avatar shape='square' size={150} icon={<UserOutlined />} src={imageUrl ? imageUrl : null} style={{ objectFit: 'cover' }} />
+                            <Avatar shape='square' size={130} icon={<UserOutlined />} src={imageUrl ? imageUrl : null} style={{ objectFit: 'cover', color: '#4d98dd', backgroundColor: '#fff' }} />
                         </Col>
                         <Col span={12} style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'flex-end' }}>
                             <Form.Item >
@@ -100,11 +100,11 @@ function Register(props) {
                         </Col>
                     </Row>
                     <Row justify='center' style={{ padding: '10px 0', width: '100%' }}>
-                        <Col xs={16} sm={16} md={16} lg={14} xl={14}>
+                        <Col xs={16} sm={16} md={16} lg={13} xl={13}>
                             <Form.Item
                                 name="username"
                                 // label="Username"
-                                label={<span ><strong>Username</strong></span>}
+                                label={<span style={{ color: '#4d98dd' }}><strong>Username</strong></span>}
                                 rules={[
                                     {
                                         required: true,
@@ -118,7 +118,7 @@ function Register(props) {
 
                             <Form.Item
                                 name="password"
-                                label={<span ><strong>Password</strong></span>}
+                                label={<span style={{ color: '#4d98dd' }} ><strong>Password</strong></span>}
                                 rules={[
                                     {
                                         required: true,
@@ -132,7 +132,7 @@ function Register(props) {
 
                             <Form.Item
                                 name="confirm"
-                                label={<span ><strong>Confirm Password</strong></span>}
+                                label={<span style={{ color: '#4d98dd' }}><strong>Confirm Password</strong></span>}
                                 dependencies={['password']}
                                 hasFeedback
                                 rules={[
@@ -156,7 +156,7 @@ function Register(props) {
                             <Form.Item
                                 name="name"
                                 label={
-                                    <span>
+                                    <span style={{ color: '#4d98dd' }}>
                                         <strong>Name</strong>
                                     </span>
                                 }
