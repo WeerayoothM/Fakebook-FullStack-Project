@@ -17,10 +17,10 @@ function Post({ post, fetchData }) {
     const [isLike, setIsLike] = useState(false);
     const [isShowComment, setIsShowComment] = useState(false);
     const token = LocalStorageService.getToken();
-    const decoded = jwt_decode(token);
+    const decoded = LocalStorageService.getUserProfile();
 
     useEffect(() => {
-        const indexMyLike = Likes.findIndex(like => like.User.id === decoded.id);
+        const indexMyLike = Likes.findIndex(like => like.User.id === decoded?.id);
         console.log(indexMyLike)
         if (indexMyLike !== -1) setIsLike(true);
     }, [])
@@ -71,9 +71,6 @@ function Post({ post, fetchData }) {
     const likePost = () => {
         axios.post(`/posts/like/${id}`)
             .then(res => {
-                notification.success({
-                    description: 'like success'
-                })
                 setIsLike(true)
                 fetchData()
             }).catch(err => {
@@ -84,9 +81,6 @@ function Post({ post, fetchData }) {
     const unLikePost = () => {
         axios.delete(`/posts/like/${id}`)
             .then(res => {
-                notification.success({
-                    description: 'unlike success'
-                })
                 setIsLike(false)
                 fetchData()
             }).catch(err => {
@@ -191,7 +185,7 @@ function Post({ post, fetchData }) {
         </Menu>
     );
 
-    if (decoded.id === User.id) {
+    if (decoded?.id === User.id) {
         manageButton = (
             <Col span={2} style={{ padding: '15px 15px 15px 5px' }}>
                 <Row justify="end">
@@ -213,7 +207,7 @@ function Post({ post, fetchData }) {
         // <Col style={{ width: '500px', border: '1px solid hsl(0,0%,80%)', margin: '20px 0 20px 0', display: 'flex', flexDirection: 'column', justify: 'center', alignItems: 'center', borderRadius: '5px' }}>
         <Card
             bodyStyle={{ padding: "0" }}
-            style={{ width: '500px', marginTop: "20px", border: '1px solid hsl(0,0%,80%)' }}
+            style={{ width: '500px', marginTop: "20px", border: '1px solid hsl(0,0%,80%)', borderRadius: '6px' }}
         >
             <Row >
                 <Col span={3} style={{ padding: '20px' }}>
@@ -238,18 +232,17 @@ function Post({ post, fetchData }) {
 
             {
                 picture_url ?
-                    <Row style={{ width: '100%', borderBottom: '1px solid hsl(0,0%,90%)' }}>
+                    <Row style={{ width: '100%' }}>
                         <Image src={picture_url} width={'100%'} style={{ objectFit: 'cover' }} />
                     </Row> : null
             }
 
-            <Row style={{ width: '90%', height: '40px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'gray', borderBottom: '1px solid hsl(0,0%,90%)' }}>
-                <LikesList Likes={Likes} />
+            <Row style={{ width: '95%', height: '40px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'gray', borderBottom: '1px solid hsl(0,0%,90%)' }}>
+                <LikesList Likes={Likes} fetchData={fetchData} />
                 <span>{Comments.length}&nbsp;Comments</span>
-
             </Row>
 
-            <Row style={{ width: '100%', height: '40px', display: 'flex', justifyContent: 'center', alignItems: 'center', color: 'gray', borderBottom: '1px solid hsl(0,0%,90%)', }}>
+            <Row style={{ width: '95%', height: '40px', margin: '0 auto', display: 'flex', justifyContent: 'center', alignItems: 'center', color: 'gray', borderBottom: '1px solid hsl(0,0%,90%)', }}>
                 <Col span={3} style={{}}>
                     <Button type="text" onClick={isLike ? unLikePost : likePost} ><LikeOutlined />&nbsp;&nbsp;{isLike ? 'Unlike' : 'Like'}</Button>
                 </Col>
@@ -259,8 +252,6 @@ function Post({ post, fetchData }) {
             </Row>
 
             <Row style={{ padding: '0', width: '100%', display: 'flex' }}>
-
-
                 {isShowComment &&
                     <CommentList
                         fetchData={fetchData}

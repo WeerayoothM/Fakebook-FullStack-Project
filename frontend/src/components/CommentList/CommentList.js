@@ -7,7 +7,6 @@ function CommentList({ commentList, postId, fetchData }) {
     return (
         <>
             <Row style={{ width: '100%' }}>
-
                 {commentList.map(comment =>
                     <Comment
                         key={comment.id}

@@ -9,7 +9,7 @@ function PrivateRoutes(props) {
 
     return (
         <>
-            {role !== "GUEST" ? <NavBar /> : null}
+            {role !== "GUEST" ? <NavBar setRole={props.setRole} /> : null}
             <Switch>
                 {RolesLists[role].map(({ path, page: PageComponent }, idx) => <Route key={idx} exact path={path}>
                     <PageComponent setRole={props.setRole} />

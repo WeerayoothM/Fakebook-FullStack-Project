@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
-import { Modal, Button, List, Col, Avatar, Row } from 'antd';
-import { LikeOutlined } from '@ant-design/icons';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Modal, Button, List, Col, Avatar } from 'antd';
+import LikesListItem from './LikesListItem';
 
 
 function LikesList({ Likes }) {
@@ -20,9 +19,10 @@ function LikesList({ Likes }) {
         console.log(e);
         setVisibleLikeModal(false)
     };
+
     return (
         <>
-            <Button type="text" onClick={showModal} style={{ cursor: 'pointer' }} ><LikeOutlined />&nbsp;{Likes.length}</Button>
+            <Button type="text" onClick={showModal} icon={<Avatar src={"https://i.pinimg.com/originals/39/44/6c/39446caa52f53369b92bc97253d2b2f1.png"} />} style={{ cursor: 'pointer', padding: '0' }} >{` ${Likes.length}`}</Button>
             <Modal
                 title="People who like this post."
                 visible={visibleLikeModal}
@@ -34,16 +34,7 @@ function LikesList({ Likes }) {
                     dataSource={Likes}
                     renderItem={like =>
                         <List.Item style={{ padding: '0' }}>
-                            {/* <Row style={{ width: '100%' }}> */}
-                            <Col span={4} style={{ padding: '15px 0px 15px 15px', display: 'flex', justifyContent: 'flex-end' }}>
-                                <Avatar size={40} src={like.User.profile_url} alt='' style={{ objectFit: 'cover' }} />
-                            </Col>
-                            <Col span={19} style={{ display: 'flex', justifyContent: 'flex-start', fontSize: '1.2rem' }}>
-                                <Link to={`/profile/${like.User.id}`} style={{ color: "#385898", fontWeight: 'bold' }}>
-                                    {like.User.name}
-                                </Link>
-                            </Col>
-                            {/* </Row> */}
+                            <LikesListItem like={like} />
                         </List.Item>
                     }
                 />

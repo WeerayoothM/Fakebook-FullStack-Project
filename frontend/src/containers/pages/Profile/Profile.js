@@ -1,6 +1,6 @@
 import { Avatar, Button, Card, Col, Dropdown, Menu, notification, Row } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Post from '../../../components/Post/Post';
 import axios from '../../../config/axios';
 import './profile.css';
@@ -95,17 +95,17 @@ function Profile() {
                                 const menu0 = (
                                     <Menu>
                                         <Menu.Item>
-                                            <div onClick={deleteFriend}>
+                                            <Link to='/editprofile'>
                                                 แก้ไขข้อมูลส่วนตัว
-                                        </div>
+                                            </Link>
                                         </Menu.Item>
                                     </Menu>
                                 );
                                 return (
                                     <>
-                                        {/* <Dropdown overlay={menu0} placement="bottomLeft">
-                                     <Button>นี่ฉันเอง</Button>
-                                    </Dropdown> */}
+                                        <Dropdown overlay={menu0} placement="bottomLeft">
+                                            <Button>นี่ฉันเอง</Button>
+                                        </Dropdown>
                                     </>
                                 );
                             case "เพื่อน":
@@ -114,7 +114,7 @@ function Profile() {
                                         <Menu.Item>
                                             <div onClick={deleteFriend}>
                                                 ลบเพื่อน
-                                        </div>
+                                            </div>
                                         </Menu.Item>
                                     </Menu>
                                 );
@@ -162,6 +162,8 @@ function Profile() {
                                         <Button>ส่งคำขอเป็นเพื่อนแล้ว</Button>
                                     </Dropdown>
                                 );
+                            default:
+                                return null;
                         }
                     })()}</Col>
                 </Row >

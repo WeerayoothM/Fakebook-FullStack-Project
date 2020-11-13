@@ -14,7 +14,7 @@ function CreatePost({ fetchData }) {
     const [profileUrl, setProfileUrl] = useState(null);
     const [fileList, setFileList] = useState([]);
     const token = LocalStorageService.getToken();
-    const decoded = jwt_decode(token);
+    const decoded = LocalStorageService.getUserProfile();
 
     const onPreview = async file => {
         let src = file.url;
@@ -70,7 +70,7 @@ function CreatePost({ fetchData }) {
     };
 
     useEffect(() => {
-        axios.get(`/users/${decoded.id}`)
+        axios.get(`/users/${decoded?.id}`)
             .then(res => {
                 console.log(res)
                 const imgUrl = res.data.targetUser.profile_url
@@ -85,11 +85,10 @@ function CreatePost({ fetchData }) {
 
         <Card
             bodyStyle={{ padding: "0" }}
-            style={{ width: 500, margin: "0 auto", marginTop: "20px", border: '1px solid hsl(0,0%,80%)' }}
+            style={{ width: 500, margin: "0 auto", marginTop: "20px", border: '1px solid hsl(0,0%,80%)', borderRadius: '6px' }}
         >
-
-            <Row justify="start" align="middle" style={{ width: '100%', height: '50px', backgroundColor: 'lightgray', padding: '0 20px' }}>
-                <span style={{ fontSize: '1.2rem' }}>Create Post</span>
+            <Row justify="center" align="middle" style={{ width: '100%', height: '50px', backgroundColor: 'hsl(0,0%,90%)', borderBottom: '1px solid hsl(0,0%,80%)', padding: '0 20px' }}>
+                <span style={{ fontSize: '1.2rem' }}><strong> Create Post</strong></span>
             </Row>
 
             <Form name="post" onFinish={onFinish} >

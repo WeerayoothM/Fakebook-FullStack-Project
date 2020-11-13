@@ -6,7 +6,6 @@ import { BASE_BACKEND_URL } from '../../../config/constants';
 import axios from '../../../config/axios';
 import { withRouter } from 'react-router-dom';
 import ImgCrop from 'antd-img-crop';
-import backgroundImage from '../../../Images/Lovepik_com-500667884-social-network-background_edit.jpg';
 import './register.css';
 
 
@@ -28,7 +27,7 @@ import './register.css';
 // };
 
 function Register(props) {
-    const [fileName, setFileName] = useState('');
+    // const [fileName, setFileName] = useState('');
     const [imageUrl, setImageUrl] = useState(null)
 
     const onFinish = ({ username, password, name }) => {
@@ -60,7 +59,7 @@ function Register(props) {
                 console.log(info.file, info.fileList);
             }
             if (status === 'done') {
-                setFileName(info.file.response.url);
+                // setFileName(info.file.response.url);
                 setImageUrl(`${BASE_BACKEND_URL}/${info.file.response.url}`)
 
                 message.success(`${info.file.name} file uploaded successfully.`);
@@ -164,9 +163,6 @@ function Register(props) {
                             >
                                 <Input />
                             </Form.Item>
-
-
-
 
                             <Form.Item style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
                                 < Button type="primary" htmlType="submit" >
