@@ -42,6 +42,7 @@ function CreatePost({ fetchData }) {
                     description: 'create post success'
                 });
                 setInputValue('');
+                setImageUrl('')
                 setFileList([]);
                 fetchData();
             })

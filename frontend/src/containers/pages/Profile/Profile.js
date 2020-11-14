@@ -16,15 +16,12 @@ function Profile() {
 
     useEffect(() => {
         fetchData();
-    }, []);
-
-    useEffect(() => {
         axios.get(`/posts/${id}`)
             .then(res => {
                 setPostList(res.data);
                 console.log('postlist', res.data);
             });
-    }, []);
+    }, [id]);
 
     const acceptRequest = () => {
         axios.put(`/friends/accept/${id}`)
@@ -178,7 +175,7 @@ function Profile() {
 
                 {postList ?
                     <Row justify="center" style={{ display: 'flex', flexDirection: 'column', justify: 'center', alignItems: 'center' }}>
-                        {postList.map((post, idx) => <Post key={idx} post={post} />)}
+                        {postList.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()).map((post, idx) => <Post key={idx} post={post} />)}
                     </Row> : null}
 
             </Card >

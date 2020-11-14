@@ -137,6 +137,9 @@ const getMyFeed = async (req, res) => {
     order: [
       ['id', 'ASC'],
     ],
+    order: [
+      ['createdAt', 'DESC'],
+    ]
   });
 
   res.status(200).send(allFeeds);

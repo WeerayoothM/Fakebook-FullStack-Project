@@ -8,10 +8,10 @@ import axios from '../../../config/axios';
 function Feed(props) {
     const [postList, setPostList] = useState([]);
 
-    const fetchData = () => {
+    const fetchData = async () => {
+        console.log('feed', 1)
         axios.get("/posts/feed")
             .then(res => {
-                console.log('myfeed', res.data);
                 setPostList(res.data);
             });
     }
@@ -20,10 +20,12 @@ function Feed(props) {
     }, []);
 
     return (
+
         <>
             <Row justify='center' style={{ width: '100%', height: '100%' }}>
                 <Col >
                     <CreatePost fetchData={fetchData} />
+                    {/* {JSON.stringify(postList)} */}
                     <PostList fetchData={fetchData} postList={postList} />
                 </Col>
             </Row>

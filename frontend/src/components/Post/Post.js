@@ -16,12 +16,10 @@ function Post({ post, fetchData }) {
     const [fileList, setFileList] = useState([]);
     const [isLike, setIsLike] = useState(false);
     const [isShowComment, setIsShowComment] = useState(false);
-    const token = LocalStorageService.getToken();
     const decoded = LocalStorageService.getUserProfile();
 
     useEffect(() => {
         const indexMyLike = Likes.findIndex(like => like.User.id === decoded?.id);
-        console.log(indexMyLike)
         if (indexMyLike !== -1) setIsLike(true);
     }, [])
 
@@ -33,9 +31,12 @@ function Post({ post, fetchData }) {
         setPostInput(caption)
         setVisibleModal(true)
     };
+    const handleCancel = e => {
+        setVisibleModal(false)
+    };
 
-    const handleOk = e => {
-        console.log(e);
+
+    const handleChangePost = e => {
         axios.put(`posts/${id}`, { caption: postInput, picture_url: imageUrl })
             .then(res => {
                 notification.success({
@@ -48,10 +49,6 @@ function Post({ post, fetchData }) {
         setVisibleModal(false)
     };
 
-    const handleCancel = e => {
-        console.log(e);
-        setVisibleModal(false)
-    };
 
     const onPreview = async file => {
         let src = file.url;
@@ -96,6 +93,7 @@ function Post({ post, fetchData }) {
                 notification.success({
                     description: 'delete success'
                 })
+                // setList(list.filter(item => item.id !== id))
                 fetchData()
             }).catch(err => {
                 notification.error({
@@ -139,30 +137,13 @@ function Post({ post, fetchData }) {
                     <Modal
                         title="Edit Post"
                         visible={visibleModal}
-                        onOk={handleOk}
+                        onOk={handleChangePost}
                         onCancel={handleCancel}
-                    // footer={
-                    //     <>
-                    //         <ImgCrop>
-                    //             <Upload
-                    //                 {...propsUpload}
-                    //                 listType="picture-card"
-                    //                 fileList={fileList}
-                    //                 onPreview={onPreview}
-                    //                 style={{ width: '10px' }}
-                    //             >
-                    //                 {fileList.length < 1 && '+ Upload'}
-                    //             </Upload>
-                    //         </ImgCrop>
-                    //     </>
-                    // }
                     >
-                        {/* onKeyPress={(e) => e.key === "Enter" ? handleOk() : null} */}
                         <Row style={{ marginBottom: '10px' }}>
                             <Input.TextArea autoSize={{ minRows: 5 }} value={postInput} onChange={(e) => setPostInput(e.target.value)} />
                         </Row>
                         <Row>
-                            {/* <ImgCrop> */}
                             <Upload
                                 {...propsUpload}
                                 listType="picture-card"
@@ -172,7 +153,6 @@ function Post({ post, fetchData }) {
                             >
                                 {fileList.length < 1 && '+ Upload'}
                             </Upload>
-                            {/* </ImgCrop> */}
                         </Row>
                     </Modal>
                 </>
@@ -207,12 +187,11 @@ function Post({ post, fetchData }) {
         // <Col style={{ width: '500px', border: '1px solid hsl(0,0%,80%)', margin: '20px 0 20px 0', display: 'flex', flexDirection: 'column', justify: 'center', alignItems: 'center', borderRadius: '5px' }}>
         <Card
             bodyStyle={{ padding: "0" }}
-            style={{ width: '500px', marginTop: "20px", border: '1px solid hsl(0,0%,80%)', borderRadius: '6px' }}
+            style={{ width: '500px', margin: "20px 0", border: '1px solid hsl(0,0%,80%)', borderRadius: '6px' }}
         >
             <Row >
                 <Col span={3} style={{ padding: '20px' }}>
                     <Avatar src={User.profile_url} alt='' size={40} style={{ objectFit: 'cover' }} />
-                    {/* <img src={User.profile_url} height={'50px'} width={'50px'} style={{ borderRadius: '50%', objectFit: 'cover' }} alt='' /> */}
                 </Col>
                 <Col span={19} style={{ padding: '15px 15px 15px 5px', display: 'flex', justifyContent: 'center', alignItems: 'flex-start', flexDirection: 'column', fontSize: '1rem' }}>
                     <Row style={{ fontSize: '1rem' }}>
