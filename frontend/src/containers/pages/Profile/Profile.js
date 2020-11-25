@@ -165,14 +165,11 @@ function Profile() {
                     })()}</Col>
                 </Row >
             </Card>
-
-
             <Card
                 bodyStyle={{ padding: "0" }}
                 bordered={false}
                 style={{ maxWidth: '800px', margin: '0 auto', marginTop: "20px", }}
             >
-
                 {postList ?
                     <Row justify="center" style={{ display: 'flex', flexDirection: 'column', justify: 'center', alignItems: 'center' }}>
                         {postList.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()).map((post, idx) => <Post key={idx} post={post} />)}
